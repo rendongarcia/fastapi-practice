@@ -46,12 +46,10 @@ def sign_up(user: UserRegister = Body(...)):
         results = json.load(f)
                 
         user_dict = user.dict()
-        user_dict["user_id"] = str(user_dict["user_id"])
-        user_dict["birth_date"] = str(user_dict["birth_date"])
         results.append(user_dict)
 
         f.seek(0)
-        f.write(json.dumps(results))        
+        json.dump(results, f, default=str, indent=4)
         return user
 
 @app.post(
@@ -191,15 +189,10 @@ def post_tweet(tweet: Tweet = Body(...)):
         results = json.load(f)
                 
         tweet_dict = tweet.dict()
-        tweet_dict["tweet_id"] = str(tweet_dict["tweet_id"])
-        tweet_dict["created_at"] = str(tweet_dict["created_at"])        
-        tweet_dict["updated_at"] = str(tweet_dict["updated_at"])
-        tweet_dict["by"]["user_id"] = str(tweet_dict["by"]["user_id"])
-        tweet_dict["by"]["birth_date"] = str(tweet_dict["by"]["birth_date"])
         results.append(tweet_dict)
 
         f.seek(0)
-        f.write(json.dumps(results))
+        json.dump(results, f, default=str, indent=4)
         return tweet
 
 

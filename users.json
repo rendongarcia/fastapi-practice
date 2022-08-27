@@ -22,5 +22,13 @@
         "last_name": "Ray",
         "birth_date": "1822-08-27",
         "password": "stringst"
+    },
+    {
+        "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "email": "user@example.com",
+        "first_name": "Bobbie",
+        "last_name": "Cruz",
+        "birth_date": "1925-08-27",
+        "password": "stringst"
     }
 ]
