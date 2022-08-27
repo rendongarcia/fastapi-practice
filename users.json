@@ -1,0 +1,18 @@
+[
+    {
+        "user_id": "1d802a32-e318-4b5f-8492-c47cd709daad",
+        "email": "user@example.com",
+        "first_name": "string",
+        "last_name": "string",
+        "birth_date": "1992-08-27",
+        "password": "stringst"
+    },
+    {
+        "user_id": "4243d0ed-a160-439e-bb12-5bf17003edb5",
+        "email": "user@example.com",
+        "first_name": "string",
+        "last_name": "string",
+        "birth_date": "1199-08-27",
+        "password": "stringst"
+    }
+]

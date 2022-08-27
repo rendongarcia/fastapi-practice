@@ -1,4 +1,5 @@
 # Python
+import json
 from typing import List
 
 # FastAPI
@@ -6,7 +7,7 @@ from fastapi import FastAPI, status
 from fastapi import Body
 
 # Models
-from models import User, UserBase, UserLogin, Tweet
+from models import User, UserBase, UserLogin, Tweet, UserRegister
 
 app = FastAPI()
 
@@ -21,9 +22,37 @@ app = FastAPI()
     summary="Registers a new user",
     tags=["Users"]
 )
-def sign_up():
-    pass
+def sign_up(user: UserRegister = Body(...)):
+    """
+    Sign Up
 
+    This path operation registers a user in the app
+    
+    Parameters:
+
+        - Request body parameter
+            - user: UserRegister
+    
+    Returns a JSON with basic user information:
+    
+        - user_id: UUID
+        - email: EmailStr
+        - first_name: str
+        - last_name: str
+        - birth_date: date
+    """
+
+    with open("users.json", "r+", encoding="utf-8") as f:
+        results = json.load(f)
+                
+        user_dict = user.dict()
+        user_dict["user_id"] = str(user_dict["user_id"])
+        user_dict["birth_date"] = str(user_dict["birth_date"])
+        results.append(user_dict)
+
+        f.seek(0)
+        f.write(json.dumps(results))
+        return user
 
 @app.post(
     path="/auth/login",
