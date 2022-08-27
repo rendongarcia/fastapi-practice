@@ -9,6 +9,9 @@ from fastapi import Body
 # Models
 from models import User, UserBase, UserLogin, Tweet, UserRegister
 
+# Utils
+from utils import append_json_element
+
 app = FastAPI()
 
 # Path Operations
@@ -42,14 +45,7 @@ def sign_up(user: UserRegister = Body(...)):
         - birth_date: date
     """
 
-    with open("users.json", "r+", encoding="utf-8") as f:
-        results = json.load(f)
-                
-        user_dict = user.dict()
-        results.append(user_dict)
-
-        f.seek(0)
-        json.dump(results, f, default=str, indent=4)
+    if append_json_element("users.json", user.dict()):
         return user
 
 @app.post(
@@ -185,14 +181,7 @@ def post_tweet(tweet: Tweet = Body(...)):
         - by: User
     """
 
-    with open("tweets.json", "r+", encoding="utf-8") as f:
-        results = json.load(f)
-                
-        tweet_dict = tweet.dict()
-        results.append(tweet_dict)
-
-        f.seek(0)
-        json.dump(results, f, default=str, indent=4)
+    if append_json_element("tweets.json", tweet.dict()):
         return tweet
 
 

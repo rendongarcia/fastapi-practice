@@ -50,5 +50,18 @@
             "last_name": "Paniagua",
             "birth_date": "2001-08-27"
         }
+    },
+    {
+        "tweet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "content": "Este es un tweet",
+        "created_at": "2022-08-27 18:14:30.155729",
+        "updated_at": "2022-08-27 18:14:39.666000+00:00",
+        "by": {
+            "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "email": "user@example.com",
+            "first_name": "string",
+            "last_name": "string",
+            "birth_date": "1995-08-27"
+        }
     }
 ]
