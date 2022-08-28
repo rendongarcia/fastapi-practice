@@ -16,7 +16,7 @@
         "password": "stringst"
     },
     {
-        "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa3",
         "email": "user@example.com",
         "first_name": "Richie",
         "last_name": "Ray",
@@ -24,19 +24,11 @@
         "password": "stringst"
     },
     {
-        "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "password": "789798796546",
         "email": "user@example.com",
-        "first_name": "Bobbie",
-        "last_name": "Cruz",
-        "birth_date": "1925-08-27",
-        "password": "stringst"
-    },
-    {
-        "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "email": "user@example.com",
-        "first_name": "Roberto",
-        "last_name": "Mel\u00e9ndez",
-        "birth_date": "2003-08-27",
-        "password": "stringst"
+        "first_name": "Pedro",
+        "last_name": "Rimales",
+        "birth_date": "1988-08-28",
+        "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa4"
     }
 ]

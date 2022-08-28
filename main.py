@@ -1,16 +1,20 @@
 # Python
 import json
+from uuid import UUID
 from typing import List
 
 # FastAPI
 from fastapi import FastAPI, status
-from fastapi import Body
+from fastapi import Body, Path
+
+# Starlette
+from starlette.responses import RedirectResponse
 
 # Models
-from models import User, UserBase, UserLogin, Tweet, UserRegister
+from models import User, UserBase, UserLogin, Tweet, UserRegister, UserUpdate
 
 # Utils
-from utils import append_json_element
+from utils import append_json_element, search_json_element, search_and_update_json_element, search_and_delete_json_element
 
 app = FastAPI()
 
@@ -92,8 +96,29 @@ def show_all_users():
     summary="Shows a single user",
     tags=["Users"]
 )
-def show_user():
-    pass
+def show_user(user_id: UUID = Path(
+    ...,
+    title="User ID",
+    description="User ID"    
+    )
+):
+    """
+    This path operation shows a single user
+
+    Parameters:
+        - user_id: UUID
+    
+    Returns a JSON with the user information:
+
+        - user_id: UUID
+        - email: EmailStr
+        - first_name: str
+        - last_name: str
+        - birth_date: date
+    """
+    user = search_json_element("users.json", "user_id", str(user_id))
+    if user:
+        return user
 
 
 @app.put(
@@ -103,8 +128,32 @@ def show_user():
     summary="Updates a single user",
     tags=["Users"]
 )
-def update_user():
-    pass
+def update_user(
+    user_id: UUID = Path(
+        ...,
+        title="User ID",
+        description="User ID"
+    ),
+    user: UserUpdate = Body(...)
+):
+    """
+    This path operation updates a single user
+
+    Parameters:
+        - user_id: UUID
+        - user: UserNoID
+    
+    Returns a JSON with the user information:
+
+        - user_id: UUID
+        - email: EmailStr
+        - first_name: str
+        - last_name: str
+        - birth_date: date
+    """
+    new_user = search_and_update_json_element("users.json", "user_id", str(user_id), user.dict())
+    if new_user:
+        return new_user
 
 
 @app.delete(
@@ -114,9 +163,29 @@ def update_user():
     summary="Deletes a single user",
     tags=["Users"]
 )
-def delete_user():
-    pass
+def delete_user(user_id: UUID = Path(
+        ...,
+        title="User ID",
+        description="User ID"
+    )
+):
+    """
+    This path operation deletes a single user
 
+    Parameters:
+        - user_id: UUID
+    
+    Returns a JSON with the deleted user information:
+
+        - user_id: UUID
+        - email: EmailStr
+        - first_name: str
+        - last_name: str
+        - birth_date: date
+    """
+    deleted_user = search_and_delete_json_element("users.json", "user_id", str(user_id))    
+    if deleted_user:
+        return deleted_user
 ## Tweets
 
 @app.get(
@@ -126,7 +195,8 @@ def delete_user():
     summary="Home page"
     )
 def home():
-    return {"Twitter API": "Running!"}
+    response = RedirectResponse(url="/tweets")
+    return response    
 
 @app.get(
     path="/tweets",

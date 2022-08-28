@@ -11,8 +11,11 @@ from pydantic import Field
 from pydantic import validator
 
 # Models
-class UserBase(BaseModel):    
+class UserID(BaseModel):
     user_id: UUID = Field(default_factory=uuid4)
+
+
+class UserBase(BaseModel):    
     email: EmailStr = Field(...)
 
 
@@ -24,11 +27,11 @@ class Password(BaseModel):
         )
 
 
-class UserLogin(Password, UserBase):
+class UserLogin(UserID, UserBase, Password):
     pass
 
 
-class User(UserBase):
+class UserNoID(UserBase):
     first_name: str = Field(
         ...,
         min_length=1,
@@ -51,10 +54,16 @@ class User(UserBase):
         else:
             return v
 
+class User(UserNoID, UserID):
+    pass
+
 
 class UserRegister(Password, User):
     pass
 
+
+class UserUpdate(UserNoID, Password):
+    pass
 
 class Tweet(BaseModel):
     tweet_id: UUID = Field(...)
