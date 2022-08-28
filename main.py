@@ -186,6 +186,8 @@ def delete_user(user_id: UUID = Path(
     deleted_user = search_and_delete_json_element("users.json", "user_id", str(user_id))    
     if deleted_user:
         return deleted_user
+
+
 ## Tweets
 
 @app.get(
@@ -262,8 +264,28 @@ def post_tweet(tweet: Tweet = Body(...)):
     tags=["Tweets"],
     summary="Shows a single tweet"
 )
-def show_tweet():
-    pass
+def show_tweet(tweet_id: UUID = Path(
+    ...,
+    title="Tweet ID",
+    description="Tweet ID"
+)):
+    """
+    This path operation shows a single tweet
+
+    Parameters:
+        - tweet_id: UUID
+    
+    Returns a JSON with the tweet information:
+
+        - tweet_id: UUID 
+        - content: str
+        - created_at: datetime
+        - updated_at: Optional[datetime]
+        - by: User
+    """
+    tweet = search_json_element("tweets.json", "tweet_id", str(tweet_id))
+    if tweet:
+        return tweet
 
 
 @app.put(
@@ -273,9 +295,32 @@ def show_tweet():
     tags=["Tweets"],
     summary="Updates a single tweet"
 )
-def update_tweet():
-    pass
+def update_tweet(
+    tweet_id: UUID = Path(
+        ...,
+        title="Tweet ID",
+        description="Tweet ID"
+    ),
+    tweet: Tweet = Body(...)
+):
+    """
+    This path operation updates a single tweet
 
+    Parameters:
+        - tweet: Tweet
+    
+    Returns a JSON with the user information:
+
+        - tweet_id: UUID 
+        - content: str
+        - created_at: datetime
+        - updated_at: Optional[datetime]
+        - by: User
+    """
+
+    new_tweet = search_and_update_json_element("tweets.json", "tweet_id", str(tweet_id), tweet.dict())
+    if new_tweet:
+        return new_tweet
 
 @app.delete(
     path="/tweets/{tweet_id}",
@@ -284,5 +329,26 @@ def update_tweet():
     tags=["Tweets"],
     summary="Deletes a single tweet"
 )
-def delete_tweet():
-    pass
+def delete_tweet(tweet_id: UUID = Path(
+    ...,
+    title="Tweet ID",
+    description="Tweet ID"
+    )
+):
+    """
+    This path operation deletes a single tweet
+
+    Parameters:
+        - tweet_id: UUID
+    
+    Returns a JSON with the deleted tweet information:
+
+        - tweet_id: UUID 
+        - content: str
+        - created_at: datetime
+        - updated_at: Optional[datetime]
+        - by: User
+    """
+    deleted_tweet = search_and_delete_json_element("tweets.json", "tweet_id", str(tweet_id))
+    if deleted_tweet:
+        return deleted_tweet
